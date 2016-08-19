@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Editting {{appointment.id}}</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  </head>
+  <body>
+    <a href="/appointments">Home</a>
+    <a href="/logout">Logout</a>
+    <h3>Edit Below:</h3>
+    {%for message in messages%}
+    {{message}}
+    {%endfor%}
+    <form class="" action="/update/{{appointment.id}}" method="post">
+      {%csrf_token%}
+      Tasks: <input type="text" name="task" value="{{appointment.task}}">
+      Status: <select class="" name="status">
+         <option value="Pending">Pending</option>
+         <option value="Done">Done</option>
+         <option value="Missed">Missed</option>
+      </select>
+      Date: <input type="date" name="date" value="{{date}}">
+      Time: <input type="time" name="time" value="{{time}}">
+      <input type="submit" name="Submit" value="Update">
+    </form>
+  </body>
+</html>

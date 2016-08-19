@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Appointments</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  </head>
+  <body>
+    <a href="/logout">logout</a>
+    <h3>Hello, {{user.name}}</h3>
+    <h4>Here are your appointments for today, {%now 'M'%} {%now 'd'%},{% now 'Y'%}:</h4>
+    <table>
+      <tr>
+        <th>
+          Tasks
+        </th>
+        <th>
+          Time
+        </th>
+        <th>
+          Status
+        </th>
+        <th>
+          Action
+        </th>
+      </tr>
+      {%for appointment in today%}
+      <tr>
+        <td>
+           {{appointment.task}} |
+        </td>
+        <td>
+          {{appointment.time}} |
+        </td>
+        <td>
+          {{appointment.status}} |
+        </td>
+        <td>
+          {%if appointment.status == 'Pending'%}
+          <a href="/edit/{{appointment.id}}">Edit</a>
+          <a href="/delete/{{appointment.id}}">Delete</a>
+          {%endif%}
+          {%if appointment.status == 'Missed'%}
+          <a href="/edit/{{appointment.id}}">Edit</a>
+          <a href="/delete/{{appointment.id}}">Delete</a>
+          {%endif%}
+        </td>
+      </tr>
+      {%endfor%}
+    </table>
+
+    <h4>Your Other appointments:</h4>
+    <table>
+      <tr>
+        <th>
+          Tasks
+        </th>
+        <th>
+          Date
+        </th>
+        <th>
+          Time
+        </th>
+      </tr>
+      {%for appointment in other%}
+      <tr>
+        <td>
+          {{appointment.task}} |
+        </td>
+        <td>
+          {{appointment.date}} |
+        </td>
+        <td>
+          {{appointment.time}} |
+        </td>
+      </tr>
+      {%endfor%}
+    </table>
+
+    <h4>Add Appointment</h4>
+    {%for message in messages%}
+    {{message}}
+    {%endfor%}
+    <form class="" action="/add" method="post">
+      {% csrf_token %}
+        Date: <input type="date" name="date" value="">
+        Time: <input type="time" name="time" value="">
+        Tasks: <input type="text" name="tasks" value="">
+        <input type="submit" name="Submit" value="Add">
+    </form>
+  </body>
+</html>
